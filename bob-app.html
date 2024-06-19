@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Engine Sales Calculator</title>
+<script>
+function calculateTotal() {
+    var price = parseFloat(document.getElementById('price').value);
+    var quantity = parseInt(document.getElementById('quantity').value);
+    var countryCode = document.getElementById('countryCode').value.toUpperCase();
+    var taxRates = { 'FR': 0, 'CH': 31, 'BE': 35, 'CA': 42 };
+    var discount = 0;
+    
+    if (quantity >= 2 && quantity <= 4) {
+        discount = 0.10; // 10% discount
+    } else if (quantity >= 5) {
+        discount = 0.30; // 30% discount
+    }
+    
+    var tax = taxRates[countryCode] || 0;
+    var totalTax = tax * quantity;
+    var subtotal = price * quantity;
+    var discountAmount = subtotal * discount;
+    var total = subtotal + totalTax - discountAmount;
+    
+    document.getElementById('totalPrice').innerText = 'Total Price: ' + total.toFixed(2) + ' Euros';
+}
+</script>
+</head>
+<body>
+<h2>Car Engine Sales Form</h2>
+<form id="salesForm">
+    <label for="price">Price (per unit):</label>
+    <input type="number" id="price" required><br><br>
+    
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" required><br><br>
+    
+    <label for="countryCode">Country Code (ISO 2):</label>
+    <input type="text" id="countryCode" maxlength="2" required><br><br>
+    
+    <input type="button" value="Calculate Total" onclick="calculateTotal()">
+</form>
+<div id="totalPrice" style="margin-top:20px;"></div>
+</body>
+</html>
